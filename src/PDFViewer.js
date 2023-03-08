@@ -5,8 +5,7 @@ import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 export default function PDFViewer() {
-  const [pageNumber, setPageNumber] = useState(1);
-
+  const [pageNumber] = useState(1);
 
   return (
     <div>
