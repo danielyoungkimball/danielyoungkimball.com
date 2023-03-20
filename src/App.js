@@ -1,54 +1,53 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './styles.css';
-import PDFViewer from './PDFViewer';
 
 export default function App() {
-  const [isResumeVisible, setIsResumeVisible] = useState(false);
+    return (
+        <div className="container">
+            <header className="header">
+                <img src='/profileImg.png' alt="Profile" className="profile-picture" />
+                <h1>John Doe</h1>
+                <h2>Senior Software Engineer</h2>
+                <div className="social-links">
+                    <a href="https://www.linkedin.com/in/your_username" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                    <a href="https://github.com/your_username" target="_blank" rel="noopener noreferrer">GitHub</a>
+                </div>
+            </header>
 
-  const toggleResumeVisibility = () => {
-    setIsResumeVisible(!isResumeVisible);
-  };
+            <section className="about">
+                <h3>About Me</h3>
+                <p>I am a highly skilled senior software engineer with over 10 years of experience. Specializing in modern web technologies, I am passionate about creating efficient, scalable, and elegant solutions.</p>
+            </section>
 
-  return (
-    <div className="container">
-      <div className="leftColumn">
-        <div className="profile-img-container">
-          <img src="/profileImg.png" alt="Profile" className="profile-img" />
-          <div className="profile-links">
-            <a href="https://www.linkedin.com/in/danielyoungkimball/" target="_blank" rel="noopener noreferrer">
-              <img src="/linkedin.png" alt="LinkedIn" className="profile-link" />
-            </a>
-            <a href="https://www.github.com/danielyoungkimball/" target="_blank" rel="noopener noreferrer">
-              <img src="/github.png" alt="GitHub" className="profile-link" />
-            </a>
-            <a href="https://www.instagram.com/danielyoungkimball/" target="_blank" rel="noopener noreferrer">
-              <img src="/instagram.png" alt="Instagram" className="profile-link" />
-            </a>
-          </div>
-          <div className="hover-card">
-            <span>Milan, Italy 📍</span>
-          </div>
+            <section className="skills">
+                <h3>Skills</h3>
+                <ul>
+                    <li>React</li>
+                    <li>JavaScript</li>
+                    <li>Node.js</li>
+                    <li>Python</li>
+                    <li>Java</li>
+                    <li>Git</li>
+                </ul>
+            </section>
+
+            <section className="portfolio">
+                <h3>Portfolio</h3>
+                <div className="projects">
+                    <div className="project">
+                        <h4>Project 1</h4>
+                        <p>A modern web application using React, Redux, and TypeScript.</p>
+                    </div>
+                    <div className="project">
+                        <h4>Project 2</h4>
+                        <p>A high-performance back-end service built with Node.js and Express.</p>
+                    </div>
+                </div>
+            </section>
+
+            <footer className="footer">
+                <p>Contact: johndoe@example.com</p>
+            </footer>
         </div>
-        <div className="profile-text-container">
-          <h1 className="profile-name">Daniel Kimball</h1>
-          <h2 className="profile-title">Software Engineer</h2>
-          <p className="profile-description">
-            I'm a software engineer with a passion for building web applications. I'm currently working at
-            <a href="https://www.uber.com/" target="_blank" rel="noopener noreferrer"> Uber </a>
-            as a Software Engineer on the
-            <a href="https://www.uber.com/us/en/ride/uber-eats/" target="_blank" rel="noopener noreferrer"> Uber Eats </a>
-            team. I'm also a recent graduate from
-            <a href="https://www.berkeley.edu/" target="_blank" rel="noopener noreferrer"> UC Berkeley </a>
-            with a degree in Computer Science.
-          </p>
-          <button className="toggle-resume-btn" onClick={toggleResumeVisibility}>
-            {isResumeVisible ? 'Hide Resume' : 'Show Resume'}
-          </button>
-        </div>
-      </div>
-      <div className="rightColumn">
-        {isResumeVisible ? <PDFViewer /> : null}
-      </div>
-    </div>
-  );
-}
+    );
+};
