@@ -127,20 +127,16 @@ function Skills() {
 }
 
 function Footer() {
+  const email = 'danielyoungkimball@outlook.com';
+  
   return (
-    <footer className="footer">
-      <p>Contact: danielyoungkimball@outlook.com</p>
+    <footer className='card footer'>
+      <p>Get in touch: <a href={`mailto:${email}`}>{email}</a></p>
     </footer>
   );
 }
 
 export default function App() {
-  const [isResumeVisible, setIsResumeVisible] = useState(false);
-
-  const toggleResumeVisibility = () => {
-    setIsResumeVisible(!isResumeVisible);
-  };
-
   return (
     <div className="container">
       <Header />
