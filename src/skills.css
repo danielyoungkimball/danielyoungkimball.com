@@ -1,0 +1,31 @@
+.skills-section {
+    margin-bottom: 2rem;
+}
+
+.skills-section h4 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+
+.card.skills ul {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.card.skills li.skill {
+    background-color: var(--grey);
+    color: var(--black);
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    transition: transform 0.2s ease-in-out;
+}
+
+.card.skills li.skill:hover {
+    transform: scale(1.1);
+}
