@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Document, Page, pdfjs } from 'react-pdf';
 import './styles.css';
 import './header.css';
@@ -128,7 +128,7 @@ function Skills() {
 
 function Footer() {
   const email = 'danielyoungkimball@outlook.com';
-  
+
   return (
     <footer className='card footer'>
       <p>Get in touch: <a href={`mailto:${email}`}>{email}</a></p>
@@ -136,7 +136,14 @@ function Footer() {
   );
 }
 
+
+
 export default function App() {
+  useEffect(() => {
+    document.body.style.backgroundImage = 'url("/background.png")';
+    document.body.style.backgroundRepeat = 'repeat';
+  }, []);
+
   return (
     <div className="container">
       <Header />
