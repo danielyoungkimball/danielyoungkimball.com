@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { Document, Page, pdfjs } from 'react-pdf';
+import React, { useEffect } from 'react';
+import { pdfjs } from 'react-pdf';
+import PDFViewer from './PDFViewer.react';
 import './styles.css';
 import './header.css';
 import './skills.css';
@@ -33,22 +34,6 @@ function Header() {
     </header>
   );
 }
-
-function PDFViewer() {
-  const [pageNumber] = useState(1);
-  const pageStyle = {
-    boxShadow: "0px 0px 5px rgba(0, 0, 0, 0.1)",
-  };
-  return (
-    <div style={{ display: 'flex', justifyContent: 'center' }}>
-      <Document file="/kimball-resume.pdf">
-        <Page pageNumber={pageNumber} renderTextLayer={false} style={pageStyle} />
-      </Document>
-    </div>
-  );
-}
-
-
 
 function Resume() {
   return (
@@ -129,13 +114,34 @@ function Skills() {
 function Footer() {
   const email = 'danielyoungkimball@outlook.com';
 
+  const footerStyle = {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: '1rem',
+    borderTop: '1px solid #e9ecef',
+    width: '100%',
+    bottom: 0
+  };
+
+  const textStyle = {
+    margin: 0,
+    paddingRight: '0.5rem'
+  };
+
+  const linkStyle = {
+    textDecoration: 'none',
+    color: '#007bff',
+    transition: 'color 0.2s'
+  };
+
   return (
-    <footer className='card footer'>
-      <p>Get in touch: <a href={`mailto:${email}`}>{email}</a></p>
+    <footer style={footerStyle} className='card footer'>
+      <p style={textStyle}>Get in touch:</p>
+      <a style={linkStyle} href={`mailto:${email}`}>{email}</a>
     </footer>
   );
 }
-
 
 
 export default function App() {
