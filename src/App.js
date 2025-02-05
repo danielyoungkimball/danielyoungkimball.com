@@ -38,10 +38,6 @@ function Header() {
 function Resume() {
   return (
     <section className="card">
-      <div className='title'>
-        <h3>Resume</h3>
-        <a href="/kimball-resume.pdf" download>Download</a>
-      </div>
       <PDFViewer />
     </section>
   );
