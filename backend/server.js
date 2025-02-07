@@ -1,9 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const multer = require('multer');
 const axios = require('axios');
-const FormData = require('form-data');
-const fs = require('fs');
 
 const app = express();
 const PORT = 4000;
@@ -11,32 +8,31 @@ const PORT = 4000;
 const OPENAI_API_KEY = process.env.REACT_APP_OPENAI_API_KEY;
 
 app.use(cors());
+app.use(express.json());
 
-// Use multer to handle `multipart/form-data`
-const upload = multer({ dest: 'uploads/' });
-
-// Proxy endpoint to OpenAI
-app.post('/api/generate-caption', upload.single('file'), async (req, res) => {
-    if (!req.file) {
-        return res.status(400).json({ error: 'No file uploaded' });
-    }
-
+app.post('/api/generate-caption', async (req, res) => {
     try {
-        const formData = new FormData();
-        formData.append('file', fs.createReadStream(req.file.path));
-        formData.append('purpose', 'captioning');
+        // Fixed prompt for generating an Instagram caption
+        const prompt = 'Generate an Instagram caption for any photo.';
 
-        const response = await axios.post('https://api.openai.com/v1/images/generate-caption', formData, {
-            headers: {
-                ...formData.getHeaders(),
-                'Authorization': `Bearer ${OPENAI_API_KEY}`,
+        const response = await axios.post(
+            'https://api.openai.com/v1/chat/completions',
+            {
+                model: 'gpt-4',
+                messages: [
+                    { role: 'system', content: 'You are an assistant that generates Instagram captions.' },
+                    { role: 'user', content: prompt },
+                ],
             },
-        });
+            {
+                headers: {
+                    'Authorization': `Bearer ${OPENAI_API_KEY}`,
+                    'Content-Type': 'application/json',
+                },
+            }
+        );
 
-        // Clean up uploaded file
-        fs.unlinkSync(req.file.path);
-
-        res.json(response.data);
+        res.json({ caption: response.data.choices[0].message.content });
     } catch (error) {
         console.error('Error from OpenAI:', error.response?.data || error.message);
         res.status(500).json({ error: 'Failed to generate caption' });

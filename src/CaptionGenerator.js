@@ -5,14 +5,13 @@ const CaptionGenerator = () => {
     const [image, setImage] = useState(null);
     const [caption, setCaption] = useState('');
     const [loading, setLoading] = useState(false);
-    const fileInputRef = useRef(null); // Reference to the file input
+    const fileInputRef = useRef(null);
 
     const handleDrop = (e) => {
         e.preventDefault();
         const file = e.dataTransfer.files[0];
         if (file && file.type.startsWith('image/')) {
             setImage(file);
-            // Update the file input element programmatically
             if (fileInputRef.current) {
                 const dataTransfer = new DataTransfer();
                 dataTransfer.items.add(file);
@@ -29,31 +28,31 @@ const CaptionGenerator = () => {
     };
 
     const handleGenerateCaption = async () => {
-        if (!image) return;
         setLoading(true);
-
-        const formData = new FormData();
-        formData.append('file', image);
 
         try {
             const response = await fetch('http://localhost:4000/api/generate-caption', {
                 method: 'POST',
-                body: formData,
+                headers: { 'Content-Type': 'application/json' },
             });
 
+            if (!response.ok) {
+                throw new Error('Failed to generate caption. You have reached your usage limit. Please retry after some time.');
+            }
+
             const data = await response.json();
-            setCaption(data.caption || 'Failed to generate caption.');
+            setCaption(data.caption);
         } catch (error) {
             console.error('Error generating caption:', error);
-            setCaption('Failed to generate caption. Please try again.');
+            setCaption('Failed to generate caption. You have reached your usage limit. Please retry after some time.');
+        } finally {
+            setLoading(false);
         }
-
-        setLoading(false);
     };
 
     return (
         <div className="caption-generator card">
-            <h2>AI-Powered Image Caption Generator</h2>
+            <h2>AI-Powered Instagram Caption Generator</h2>
             <div
                 className="drop-zone"
                 onDragOver={(e) => e.preventDefault()}
@@ -75,7 +74,7 @@ const CaptionGenerator = () => {
                     ref={fileInputRef}
                 />
             </div>
-            <button onClick={handleGenerateCaption} disabled={!image || loading}>
+            <button onClick={handleGenerateCaption} disabled={loading}>
                 {loading ? 'Generating Caption...' : 'Generate Caption'}
             </button>
             {caption && <p className="generated-caption">{caption}</p>}
