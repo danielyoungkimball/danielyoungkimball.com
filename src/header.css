@@ -1,8 +1,20 @@
 .header {
     display: flex;
+    flex-direction: column; /* Stack navigation and row content */
     justify-content: space-between;
     align-items: center;
     margin-bottom: 2rem;
+}
+
+.row {
+    display: flex;
+    flex: 1;
+    text-align: center;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    gap: 2rem;
 }
 
 .column {
@@ -29,9 +41,26 @@
 
 .header-info {
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    flex-direction: column; /* Stack items vertically */
+    align-items: center; /* Center align */
+    justify-content: center;
     text-align: center;
+    gap: 0.5rem; /* Add spacing between lines */
+}
+
+.name {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin: 0; /* Remove extra margin */
+    white-space: nowrap; /* Prevent text wrapping */
+}
+
+.job-title {
+    font-size: 1.4rem;
+    font-weight: 400;
+    color: var(--dark-grey);
+    margin: 0; /* Remove extra margin */
+    white-space: nowrap; /* Prevent text wrapping */
 }
 
 .header-link {
@@ -41,14 +70,36 @@
     margin: 1rem;
 }
 
-.name {
-    font-size: 2.5rem;
-    margin-bottom: 0.25rem;
+.header-links {
+    display: flex; /* Use flexbox for alignment */
+    flex-direction: row; /* Arrange logos in a row */
+    justify-content: center; /* Center the content horizontally */
+    align-items: center; /* Align the icons vertically */
+    gap: 1rem; /* Add spacing between the logos */
+    margin-top: 1rem; /* Optional: Adjust spacing from the rest of the header */
 }
 
-.job-title {
-    font-size: 1.4rem;
-    font-weight: 400;
-    color: var(--dark-grey);
-    margin-bottom: 1rem;
+
+.navigation {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem 0;
+    background-color: #f9f9f9; /* Optional: Light background for separation */
+    border-bottom: 1px solid #e0e0e0; /* Optional: Subtle border */
+    margin-bottom: 1rem; /* Spacing between nav and row */
+    width: 100%;
+}
+
+.navigation a {
+    margin: 0 15px;
+    text-decoration: none;
+    color: #4a4a4a;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.navigation a:hover {
+    color: #007bff;
+    text-decoration: underline;
 }
