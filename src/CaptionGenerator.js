@@ -1,8 +1,6 @@
 import React, { useRef, useState } from 'react';
 import './CaptionGenerator.css';
 
-const OPENAI_API_KEY = process.env.REACT_APP_OPENAI_API_KEY;
-
 const CaptionGenerator = () => {
     const [image, setImage] = useState(null);
     const [caption, setCaption] = useState('');
@@ -38,11 +36,8 @@ const CaptionGenerator = () => {
         formData.append('file', image);
 
         try {
-            const response = await fetch('https://api.openai.com/v1/images/generate-caption', {
+            const response = await fetch('http://localhost:4000/api/generate-caption', {
                 method: 'POST',
-                headers: {
-                    Authorization: `Bearer ${OPENAI_API_KEY}`,
-                },
                 body: formData,
             });
 
