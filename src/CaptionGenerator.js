@@ -1,54 +1,91 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import './CaptionGenerator.css';
 
+const OPENAI_API_KEY = process.env.REACT_APP_OPENAI_API_KEY;
+
 const CaptionGenerator = () => {
-  const [inputText, setInputText] = useState('');
-  const [caption, setCaption] = useState('');
-  const [loading, setLoading] = useState(false);
+    const [image, setImage] = useState(null);
+    const [caption, setCaption] = useState('');
+    const [loading, setLoading] = useState(false);
+    const fileInputRef = useRef(null); // Reference to the file input
 
-  const generateCaption = async () => {
-    if (!inputText) return;
-    setLoading(true);
-    
-    try {
-      const response = await fetch('https://api.openai.com/v1/completions', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer YOUR_OPENAI_API_KEY`
-        },
-        body: JSON.stringify({
-          model: 'text-davinci-003',
-          prompt: `Generate a creative social media caption for: ${inputText}`,
-          max_tokens: 50
-        })
-      });
-      
-      const data = await response.json();
-      setCaption(data.choices[0].text.trim());
-    } catch (error) {
-      console.error('Error fetching caption:', error);
-      setCaption('Failed to generate caption. Try again!');
-    }
-    
-    setLoading(false);
-  };
+    const handleDrop = (e) => {
+        e.preventDefault();
+        const file = e.dataTransfer.files[0];
+        if (file && file.type.startsWith('image/')) {
+            setImage(file);
+            // Update the file input element programmatically
+            if (fileInputRef.current) {
+                const dataTransfer = new DataTransfer();
+                dataTransfer.items.add(file);
+                fileInputRef.current.files = dataTransfer.files;
+            }
+        }
+    };
 
-  return (
-    <div className="caption-generator card">
-      <h2>AI-Powered Caption Generator</h2>
-      <input 
-        type="text" 
-        placeholder="Enter video title or theme..." 
-        value={inputText} 
-        onChange={(e) => setInputText(e.target.value)} 
-      />
-      <button onClick={generateCaption} disabled={loading}>
-        {loading ? 'Generating...' : 'Generate Caption'}
-      </button>
-      {caption && <p className="generated-caption">{caption}</p>}
-    </div>
-  );
+    const handleUpload = (e) => {
+        const file = e.target.files[0];
+        if (file && file.type.startsWith('image/')) {
+            setImage(file);
+        }
+    };
+
+    const handleGenerateCaption = async () => {
+        if (!image) return;
+        setLoading(true);
+
+        const formData = new FormData();
+        formData.append('file', image);
+
+        try {
+            const response = await fetch('https://api.openai.com/v1/images/generate-caption', {
+                method: 'POST',
+                headers: {
+                    Authorization: `Bearer ${OPENAI_API_KEY}`,
+                },
+                body: formData,
+            });
+
+            const data = await response.json();
+            setCaption(data.caption || 'Failed to generate caption.');
+        } catch (error) {
+            console.error('Error generating caption:', error);
+            setCaption('Failed to generate caption. Please try again.');
+        }
+
+        setLoading(false);
+    };
+
+    return (
+        <div className="caption-generator card">
+            <h2>AI-Powered Image Caption Generator</h2>
+            <div
+                className="drop-zone"
+                onDragOver={(e) => e.preventDefault()}
+                onDrop={handleDrop}
+            >
+                {image ? (
+                    <img
+                        src={URL.createObjectURL(image)}
+                        alt="Uploaded Preview"
+                        className="preview-image"
+                    />
+                ) : (
+                    <p>Drag & Drop an image here, or click to upload</p>
+                )}
+                <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleUpload}
+                    ref={fileInputRef}
+                />
+            </div>
+            <button onClick={handleGenerateCaption} disabled={!image || loading}>
+                {loading ? 'Generating Caption...' : 'Generate Caption'}
+            </button>
+            {caption && <p className="generated-caption">{caption}</p>}
+        </div>
+    );
 };
 
 export default CaptionGenerator;
