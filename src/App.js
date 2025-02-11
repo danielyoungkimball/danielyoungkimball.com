@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import { pdfjs } from 'react-pdf';
+import Apple from './Apple.js';
 import PDFViewer from './PDFViewer.react';
 import CaptionGenerator from './CaptionGenerator';
 import './styles.css';
@@ -13,7 +14,7 @@ function Header() {
   return (
     <header className="header card">
       <nav className="navigation">
-        <Link to="/">Resume</Link> | <Link to="/ai-powered-caption-generator">AI Caption Generator</Link>
+        <Link to="/">Resume</Link> | <Link to="/ai-powered-caption-generator">AI Caption Generator</Link> | <Link to="/apple">Apple Contract</Link>
       </nav>
       <div className='row'>
         <div className="column">
@@ -72,6 +73,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Resume />} />
           <Route path="/ai-powered-caption-generator" element={<CaptionGenerator />} />
+          <Route path="/apple" element={<Apple />} />
         </Routes>
         <Footer />
       </div>

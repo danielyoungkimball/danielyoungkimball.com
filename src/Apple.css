@@ -1,0 +1,65 @@
+.apple-page {
+    margin: 0 auto;
+    padding: 2rem;
+    text-align: left;
+}
+
+.apple-page h2, .apple-page h3 {
+    color: #333;
+}
+
+.apple-page ul {
+    list-style-type: square;
+    margin-left: 20px;
+}
+
+.apple-page p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+.apple-page a {
+    color: #0071e3;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.apple-page a:hover {
+    text-decoration: underline;
+}
+
+.video-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.video-grid video {
+    width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.code-snippet {
+    background-color: #282c34;
+    color: #ffffff;
+    padding: 15px;
+    border-radius: 8px;
+    font-family: "Courier New", Courier, monospace;
+    overflow-x: auto;
+    margin-top: 10px;
+}
+
+.why-it-works {
+    background-color: #f9f9f9;
+    border-left: 5px solid #4CAF50;
+    padding: 15px;
+    margin-top: 15px;
+    font-size: 1rem;
+}
+
+.why-it-works p {
+    margin: 5px 0;
+    font-weight: 500;
+}
