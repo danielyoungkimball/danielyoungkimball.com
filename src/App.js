@@ -4,10 +4,12 @@ import { pdfjs } from 'react-pdf';
 import Apple from './Apple.js';
 import PDFViewer from './PDFViewer.react';
 import CaptionGenerator from './CaptionGenerator';
+import { useNavigate } from 'react-router-dom';
 import './styles.css';
 import './header.css';
 import './skills.css';
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
+
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 function Header() {
@@ -44,12 +46,15 @@ function Header() {
 }
 
 function Resume() {
-  return (
-    <section className="card">
-      <PDFViewer />
-    </section>
-  );
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    navigate('/pdf-viewer?file=kimball-resume.pdf');  // Redirect to default PDF
+  }, [navigate]);
+
+  return null;  // Prevents rendering a blank screen
 }
+
 
 function Footer() {
   const email = 'danielyoungkimball@outlook.com';
@@ -72,6 +77,7 @@ export default function App() {
         <Header />
         <Routes>
           <Route path="/" element={<Resume />} />
+          <Route path="/pdf-viewer" element={<PDFViewer />} />
           <Route path="/ai-powered-caption-generator" element={<CaptionGenerator />} />
           <Route path="/apple" element={<Apple />} />
         </Routes>
