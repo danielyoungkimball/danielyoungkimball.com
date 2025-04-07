@@ -27,7 +27,7 @@ function Header() {
         <div className="column">
           <div className="header-info">
             <h1 className="name">Daniel Kimball</h1>
-            <h2 className="job-title">Senior Software Engineer</h2>
+            <h2 className="job-title">Software Engineer</h2>
           </div>
         </div>
         <div className="column">
